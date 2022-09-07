@@ -8,12 +8,25 @@ const initialState = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
+const isDublicate = ({ name }, contacts) => {
+  const normalizedName = name.toLowerCase();
+
+  const result = contacts.find(contact => {
+    return normalizedName === contact.name.toLowerCase();
+  });
+  return Boolean(result);
+};
+
 const itemsReducer = createReducer(initialState, {
   [addContact]: (store, { payload }) => {
+    if (isDublicate(payload, store)) {
+      return alert(`${payload.name} already in contacts`);
+    }
     store.push(payload);
   },
 
-  [removeContact]: (store, {payload}) => store.filter(({id}) => id !== payload)
+  [removeContact]: (store, { payload }) =>
+    store.filter(({ id }) => id !== payload),
 });
 
-export default itemsReducer
+export default itemsReducer;

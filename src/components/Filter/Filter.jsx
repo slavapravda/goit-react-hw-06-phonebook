@@ -1,18 +1,33 @@
-import PropTypes from 'prop-types'
-import s from './filter.module.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from 'redux/contacts/filter/filterSelectors';
+import { setFilter } from 'redux/contacts/filter/filterActions';
 
-const Filter = ({onChange}) => {
+import s from './filter.module.css';
+
+
+const Filter = () => {
+  const filterName = useSelector(getFilter);
+  const dispatch = useDispatch();
+
+  const handleFilter = ({ target }) => {
+    dispatch(setFilter(target.value));
+  };
+
   return (
     <div>
-      <label className={s.form__group}>Find contacts by name
-        <input className={s.input} type="text" name="filter" placeholder="..." onChange={onChange}/>
+      <label className={s.form__group}>
+        Find contacts by name
+        <input
+          className={s.input}
+          value={filterName}
+          type="text"
+          name="filter"
+          placeholder="..."
+          onChange={handleFilter}
+        />
       </label>
-      </div>
+    </div>
   );
 };
 
 export default Filter;
-
-Filter.propTypes = {
-  onChange: PropTypes.func,
-}

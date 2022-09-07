@@ -10,5 +10,4 @@ export const addContact = createAction('contact/add', (data) => {
     }
 })
 
-
 export const removeContact = createAction('contact/remove')
